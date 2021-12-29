@@ -8,6 +8,7 @@ export default function App() {
   const [products, setProducts] = useState([]);
   const [productsBySize, setProductsBySize] = useState([]);
   const [currentSize, setCurrentSize] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const retrieveProducts = async () => {
     try {
@@ -15,6 +16,8 @@ export default function App() {
       setProducts(fetchedProducts);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,6 +72,7 @@ export default function App() {
             </select>
             {currentSize && <h2>SHOE Size: {currentSize}</h2>}
           </section>
+          {loading && <h2>Loading products...</h2>}
           <section id="products">{productsBySize.map(renderProduct)}</section>
         </main>
       </div>
