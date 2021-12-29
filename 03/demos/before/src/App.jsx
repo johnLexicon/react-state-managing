@@ -1,39 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts } from './services/productService';
+// import { getProducts } from './services/productService';
+import useFetch from './hooks/useFetch';
 import './App.css';
 import Footer from './Footer';
 import Header from './Header';
 
 export default function App() {
-  const [products, setProducts] = useState([]);
-  const [productsBySize, setProductsBySize] = useState([]);
+  const {
+    data: products,
+    error,
+    loading
+  } = useFetch('products?category=shoes');
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentSize, setCurrentSize] = useState('');
-  const [loading, setLoading] = useState(true);
-
-  const retrieveProducts = async () => {
-    try {
-      const fetchedProducts = await getProducts('shoes');
-      setProducts(fetchedProducts);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredBySize = () => {
-    if (currentSize === '') {
-      setProductsBySize((prevState) => [...products]);
+    if (!products) {
       return;
     }
-    setProductsBySize((prevState) =>
+    if (currentSize === '') {
+      setFilteredProducts((prevState) => [...products]);
+      return;
+    }
+    setFilteredProducts((prevState) =>
       products.filter((p) => p.skus.find((s) => +s.size === +currentSize))
     );
   };
-
-  useEffect(() => {
-    retrieveProducts();
-  }, []);
 
   useEffect(() => {
     filteredBySize();
@@ -73,7 +65,13 @@ export default function App() {
             {currentSize && <h2>SHOE Size: {currentSize}</h2>}
           </section>
           {loading && <h2>Loading products...</h2>}
-          <section id="products">{productsBySize.map(renderProduct)}</section>
+          {!error ? (
+            <section id="products">
+              {filteredProducts.map(renderProduct)}
+            </section>
+          ) : (
+            <h2>Unable to retrieve products</h2>
+          )}
         </main>
       </div>
       <Footer />
