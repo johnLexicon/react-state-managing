@@ -34,10 +34,11 @@ const Product = () => {
         </select>
       </div>
       <button
+        disabled={!sku}
         onClick={() => {
           if (sku) navigate('/cart', { replace: false });
         }}
-        className={`btn btn-primary ${sku ? '' : 'disabled'}`}
+        className={`btn btn-primary`}
       >
         Add to Cart
       </button>
