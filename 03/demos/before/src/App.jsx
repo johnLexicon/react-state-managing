@@ -67,6 +67,7 @@ export default function App() {
               <option value="8">8</option>
               <option value="9">9</option>
             </select>
+            {currentSize && <h2>SHOE Size: {currentSize}</h2>}
           </section>
           <section id="products">{productsBySize.map(renderProduct)}</section>
         </main>
