@@ -18,6 +18,14 @@ body {
   height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
 }
 
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
 .content {
   flex: 1 0 auto;
   padding: 20px;
@@ -92,7 +100,7 @@ header li {
   padding-right: 20px;
 }
 
-input[type="number"] {
+input[type='number'] {
   width: 50px;
 }
 
@@ -170,13 +178,13 @@ fieldset[disabled] .btn {
   box-shadow: none;
 }
 
-p[role="alert"] {
+p[role='alert'] {
   display: inline;
   margin-left: 10px;
   color: red;
 }
 
-div[role="alert"] {
+div[role='alert'] {
   color: red;
 }
 
@@ -199,7 +207,7 @@ form > div {
   height: 80px;
 }
 .lds-dual-ring:after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 64px;
   height: 64px;
