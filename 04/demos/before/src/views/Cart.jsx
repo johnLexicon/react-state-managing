@@ -42,9 +42,14 @@ const Cart = ({ cartItems, updateQuantity }) => {
   if (loading) return <Spinner />;
   if (error) throw error;
 
+  const numItems = cartItems.reduce((total, item) => {
+    return total + item.quantity;
+  }, 0);
+
   return (
     <section id="cart">
       <h1>Cart</h1>
+      <p>Total items: {numItems}</p>
       <ul>{cartItems.map(renderItem)}</ul>
     </section>
   );
