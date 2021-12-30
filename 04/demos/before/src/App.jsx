@@ -33,10 +33,11 @@ export default function App() {
 
   function updateQuantity(sku, quantity) {
     setCartItems((prevState) => {
-      return prevState.map((item) => {
-        if (+item.sku === +sku) return { ...item, quantity };
-        return item;
-      });
+      return quantity === 0
+        ? prevState.filter((item) => +item.sku !== +sku)
+        : prevState.map((item) =>
+            +item.sku === +sku ? { ...item, quantity } : item
+          );
     });
   }
 
