@@ -14,16 +14,27 @@ export default function App() {
   // cartItem = {id, sku}
   function addToCart(cartItem) {
     setCartItems((prevState) => {
-      const existingItem = prevState.find((item) => item.sku === cartItem.sku);
+      const existingItem = prevState.find(
+        (item) => +item.sku === +cartItem.sku
+      );
       if (!existingItem)
         return [
           ...prevState,
           { id: cartItem.id, sku: cartItem.sku, quantity: 1 }
         ];
       return prevState.map((item) => {
-        if (item.sku === cartItem.sku) {
+        if (+item.sku === +cartItem.sku) {
           return { ...item, quantity: item.quantity + 1 };
         }
+        return item;
+      });
+    });
+  }
+
+  function updateQuantity(sku, quantity) {
+    setCartItems((prevState) => {
+      return prevState.map((item) => {
+        if (+item.sku === +sku) return { ...item, quantity };
         return item;
       });
     });
@@ -41,7 +52,12 @@ export default function App() {
               path="/products/:category/:id"
               element={<Product addToCart={addToCart} />}
             />
-            <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+            <Route
+              path="/cart"
+              element={
+                <Cart cartItems={cartItems} updateQuantity={updateQuantity} />
+              }
+            />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
