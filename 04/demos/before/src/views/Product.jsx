@@ -4,7 +4,7 @@ import useFetch from '../services/useFetch';
 import Spinner from '../Spinner';
 import PageNotFound from './PageNotFound';
 
-const Product = () => {
+const Product = ({ addToCart }) => {
   const { id } = useParams();
   const { data: product, loading, error } = useFetch(`products/${id}`);
   const navigate = useNavigate();
@@ -36,7 +36,8 @@ const Product = () => {
       <button
         disabled={!sku}
         onClick={() => {
-          if (sku) navigate('/cart', { replace: false });
+          addToCart({ id, sku });
+          navigate('/cart', { replace: false });
         }}
         className={`btn btn-primary`}
       >
