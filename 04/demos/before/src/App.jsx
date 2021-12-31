@@ -7,6 +7,7 @@ import Products from './views/Products';
 import Product from './views/Product';
 import Cart from './views/Cart';
 import PageNotFound from './views/PageNotFound';
+import Checkout from './views/Checkout';
 
 export default function App() {
   const [cartItems, setCartItems] = useState(() => {
@@ -70,6 +71,7 @@ export default function App() {
                 <Cart cartItems={cartItems} updateQuantity={updateQuantity} />
               }
             />
+            <Route path="/checkout" element={<Checkout cart={cartItems} />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
