@@ -53,6 +53,10 @@ export default function App() {
     });
   }
 
+  function emptyCart() {
+    setCartItems([]);
+  }
+
   return (
     <>
       <div className="content">
@@ -71,7 +75,10 @@ export default function App() {
                 <Cart cartItems={cartItems} updateQuantity={updateQuantity} />
               }
             />
-            <Route path="/checkout" element={<Checkout cart={cartItems} />} />
+            <Route
+              path="/checkout"
+              element={<Checkout cart={cartItems} emptyCart={emptyCart} />}
+            />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
