@@ -54,6 +54,7 @@ const Cart = ({ cartItems, updateQuantity }) => {
       <p>Total items: {numItems}</p>
       <ul>{cartItems.map(renderItem)}</ul>
       <button
+        disabled={numItems === 0}
         onClick={() => {
           navigate('/checkout');
         }}
