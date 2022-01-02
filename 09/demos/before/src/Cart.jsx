@@ -1,10 +1,12 @@
-import React from "react";
-import useFetchAll from "./services/useFetchAll";
-import Spinner from "./Spinner";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from 'react';
+import useFetchAll from './services/useFetchAll';
+import Spinner from './Spinner';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from './cartContext';
 
-export default function Cart({ cart, dispatch }) {
+export default function Cart() {
   const navigate = useNavigate();
+  const { cart, dispatch } = useContext(CartContext);
   const urls = cart.map((i) => `products/${i.id}`);
   const { data: products, loading, error } = useFetchAll(urls);
 
@@ -27,9 +29,9 @@ export default function Cart({ cart, dispatch }) {
               aria-label={`Select quantity for ${name} size ${size}`}
               onChange={(e) =>
                 dispatch({
-                  type: "updateQuantity",
+                  type: 'updateQuantity',
                   sku,
-                  quantity: parseInt(e.target.value),
+                  quantity: parseInt(e.target.value)
                 })
               }
               value={quantity}
@@ -56,14 +58,14 @@ export default function Cart({ cart, dispatch }) {
     <section id="cart">
       <h1>
         {numItemsInCart === 0
-          ? "Your cart is empty"
-          : `${numItemsInCart} Item${numItemsInCart > 1 ? "s" : ""} in My Cart`}
+          ? 'Your cart is empty'
+          : `${numItemsInCart} Item${numItemsInCart > 1 ? 's' : ''} in My Cart`}
       </h1>
       <ul>{cart.map(renderItem)}</ul>
       {cart.length > 0 && (
         <button
           className="btn btn-primary"
-          onClick={() => navigate("/checkout")}
+          onClick={() => navigate('/checkout')}
         >
           Checkout
         </button>

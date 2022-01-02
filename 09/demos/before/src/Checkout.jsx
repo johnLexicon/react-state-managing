@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import { saveShippingAddress } from "./services/shippingService";
+import React, { useState, useContext } from 'react';
+import { saveShippingAddress } from './services/shippingService';
+import { CartContext } from './cartContext';
 
 const STATUS = {
-  IDLE: "IDLE",
-  SUBMITTED: "SUBMITTED",
-  SUBMITTING: "SUBMITTING",
-  COMPLETED: "COMPLETED",
+  IDLE: 'IDLE',
+  SUBMITTED: 'SUBMITTED',
+  SUBMITTING: 'SUBMITTING',
+  COMPLETED: 'COMPLETED'
 };
 
 // Declaring outside component to avoid recreation on each render
 const emptyAddress = {
-  city: "",
-  country: "",
+  city: '',
+  country: ''
 };
 
-export default function Checkout({ cart, dispatch }) {
+export default function Checkout() {
+  const { cart, dispatch } = useContext(CartContext);
   const [address, setAddress] = useState(emptyAddress);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState(null);
@@ -29,7 +31,7 @@ export default function Checkout({ cart, dispatch }) {
     setAddress((curAddress) => {
       return {
         ...curAddress,
-        [e.target.id]: e.target.value,
+        [e.target.id]: e.target.value
       };
     });
   }
@@ -47,7 +49,7 @@ export default function Checkout({ cart, dispatch }) {
     if (isValid) {
       try {
         await saveShippingAddress(address);
-        dispatch({ type: "empty" });
+        dispatch({ type: 'empty' });
         setStatus(STATUS.COMPLETED);
       } catch (e) {
         setSaveError(e);
@@ -59,8 +61,8 @@ export default function Checkout({ cart, dispatch }) {
 
   function getErrors(address) {
     const result = {};
-    if (!address.city) result.city = "City is required";
-    if (!address.country) result.country = "Country is required";
+    if (!address.city) result.city = 'City is required';
+    if (!address.country) result.country = 'Country is required';
     return result;
   }
 
