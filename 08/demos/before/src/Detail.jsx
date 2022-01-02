@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import useFetch from "./services/useFetch";
-import Spinner from "./Spinner";
-import PageNotFound from "./PageNotFound";
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import useFetch from './services/useFetch';
+import Spinner from './Spinner';
+import PageNotFound from './PageNotFound';
 
 export default function Detail(props) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [sku, setSku] = useState("");
+  const [sku, setSku] = useState('');
   const { data: product, loading, error } = useFetch(`products/${id}`);
 
   if (loading) return <Spinner />;
@@ -34,8 +34,8 @@ export default function Detail(props) {
           disabled={!sku}
           className="btn btn-primary"
           onClick={() => {
-            props.addToCart(id, sku);
-            navigate("/cart");
+            props.dispatch({ type: 'ADD', payload: { id, sku } });
+            navigate('/cart');
           }}
         >
           Add to cart
