@@ -18,7 +18,10 @@ export default function useFetchAll(urls) {
 
   useEffect(() => {
     // Abort if the urls are equal to previous passed in urls
-    if (areEqual(prevUrlsRef.current, urls)) return;
+    if (areEqual(prevUrlsRef.current, urls)) {
+      setLoading(false);
+      return;
+    }
     prevUrlsRef.current = urls; // Assign the latest url array
 
     const promises = urls.map((url) => {
