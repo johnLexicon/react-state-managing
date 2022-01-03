@@ -14,7 +14,12 @@ try {
 
 // Custom hook which returns the context values
 export function useCart() {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (!context)
+    throw new Error(
+      'useCart Hook must be used within the CartProvider, wrap a parent element with the CartProvider'
+    );
+  return context;
 }
 
 function CartProvider(props) {
